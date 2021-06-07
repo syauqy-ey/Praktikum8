@@ -5,7 +5,7 @@ class Pasien extends CI_Controller{
         $this->load->model('pasien_model','pasien1');
         $this->pasien1->id=1;
         $this->pasien1->kode='001227';
-        $this->pasien1->nama='Syauqi Musyaffa Khairullah';
+        $this->pasien1->nama='Syauqi Musyaffa';
         $this->pasien1->tmp_lahir='Tangerang';
         $this->pasien1->tgl_lahir='13 November 2001';
         $this->pasien1->gender='L';
@@ -33,6 +33,33 @@ class Pasien extends CI_Controller{
         $this->load->view('pasien/index',$data);
         $this->load->view('layout/footer');
     }
+
+    public function list(){
+        $this->load->model('pasien_model');
+
+        $patiens = $this->pasien_model->getAll();
+        $data['patiens'] = $patiens;
+
+        $this->load->view('layout/header');
+        $this->load->view('pasien/list', $data);
+        $this->load->view('layout/footer');
+    }
+
+    public function detail($id){
+        $this->load->model('pasien_model');
+        $patien = $this->pasien_model->getById($id);
+        if($patien == null){
+            echo "data tidak ada";
+        }
+        else{
+            $data['patien'] = $patien;
+
+            $this->load->view('layout/header');
+            $this->load->view('pasien/detail', $data);
+            $this->load->view('layout/footer');
+        }
+    }
+
 }
 
 ?>
